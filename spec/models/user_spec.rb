@@ -19,6 +19,6 @@ RSpec.describe User, type: :model do
   it { should_not allow_value('testemail').for(:email) }
 
   it { should validate_presence_of(:password) }
-  it { should validate_length_of(:password).is_at_least(8).is_at_most(20) }
+  it { should validate_length_of(:password).is_at_least(8) }
 
 end
