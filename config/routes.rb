@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: %i[show create update destroy]
       resources :tokens, only: [:create]
-      resources :activities, only: [:show]
+      resources :activities, only: [:index, :show]
     end
   end
 end
