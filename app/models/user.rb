@@ -4,4 +4,6 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates_format_of :email, with: /@/
   validates :password, presence: true, length: { minimum: 8 }
+
+  has_many :activities, dependent: :destroy
 end
