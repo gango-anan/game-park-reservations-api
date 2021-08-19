@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy]
+  before_action :check_ownership, only: %i[update destroy]
 
   def show
     render json: User.find(params[:id])
@@ -36,5 +37,9 @@ class Api::V1::UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def check_ownership
+    head :forbidden unless @user.id == current_user&.id
   end
 end
