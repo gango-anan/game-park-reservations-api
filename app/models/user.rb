@@ -5,5 +5,6 @@ class User < ApplicationRecord
   validates_format_of :email, with: /@/
   validates :password, presence: true, length: { minimum: 8 }
 
-  has_many :activities, dependent: :destroy
+  has_many :reservations
+  has_many :activities, through: :reservations
 end
