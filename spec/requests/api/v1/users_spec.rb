@@ -5,12 +5,13 @@ RSpec.describe "Api::V1::Users", type: :request do
     @user = create(:user)
     @user_two = create(:user)
     @user_three = create(:user)
+    activity = create(:activity, user: @user)
   end
 
   describe "GET /user" do
     before(:each) do
       get api_v1_user_url(@user), as: :json
-      @json_response = JSON.parse(self.response.body)
+      @json_response = JSON.parse(self.response.body, symbolize_name: true)
     end
 
     it 'should show user' do
@@ -19,6 +20,14 @@ RSpec.describe "Api::V1::Users", type: :request do
 
     it 'should ensure response contains the correct email' do
       expect(@user.email).to eql(@json_response['data']['attributes']['email'])
+    end
+
+    it 'should ensure response contains the correct user' do
+      expect(@user.activities.first.id.to_s).to eql(@json_response['data']['relationships']['activities']['data'][0]['id'])
+    end
+
+    it 'should ensure response contains the correct user activity' do
+      expect(@user.activities.first.title).to eql(@json_response['included'][0]['attributes']['title'])
     end
   end
 
