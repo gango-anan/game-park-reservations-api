@@ -18,7 +18,7 @@ RSpec.describe "Api::V1::Users", type: :request do
     end
 
     it 'should ensure response contains the correct email' do
-      expect(@user.email).to eql(@json_response['email'])
+      expect(@user.email).to eql(@json_response['data']['attributes']['email'])
     end
   end
 
