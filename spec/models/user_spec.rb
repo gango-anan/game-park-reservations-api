@@ -22,4 +22,8 @@ RSpec.describe User, type: :model do
     it { should have_many(:activities) }
   end
 
+  describe 'Associations' do
+    it { should have_many(:reservations) }
+  end
+
 end
