@@ -13,7 +13,7 @@ RSpec.describe "Api::V1::Activities", type: :request do
       get api_v1_activity_url(@activity), as: :json
       json_response = JSON.parse(self.response.body)
       expect(response).to have_http_status(:success)
-      expect(@activity.title).to eql(json_response['title'])
+      expect(@activity.title).to eql(json_response['data']['attributes']['title'])
     end
   end
 

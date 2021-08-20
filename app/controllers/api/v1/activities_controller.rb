@@ -4,17 +4,18 @@ class Api::V1::ActivitiesController < ApplicationController
   before_action :check_ownership, only: %i[update destroy]
 
   def index
-    render json: Activity.all
+    @activities = Activity.all
+    render json: ActivitySerializer.new(@activities).serializable_hash
   end
 
   def show
-    render json: Activity.find(params[:id])
+    render json: ActivitySerializer.new(@activity).serializable_hash
   end
 
   def create
     activity = current_user.activities.build(activity_params)
     if activity.save
-      render json: activity, status: :created
+      render json: ActivitySerializer.new(activity).serializable_hash, status: :created
     else
       render json: { errors: activity.errors }, status: :unprocessable_entity
     end
@@ -22,7 +23,7 @@ class Api::V1::ActivitiesController < ApplicationController
 
   def update
     if @activity.update(activity_params)
-      render json: @activity
+      render json: ActivitySerializer.new(@activity).serializable_hash
     else
       render json: @activity.errors, status: :unprocessable_entity
     end
