@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe "Api::V1::Activities", type: :request do
   before(:all) do
     @activity = create(:activity)
+    @user_two = create(:user)
   end
 
   describe "GET /api/v1/activities/:id" do
@@ -67,6 +68,41 @@ RSpec.describe "Api::V1::Activities", type: :request do
           user_id: @activity.user_id 
         }
       }, as: :json
+      expect(response).to have_http_status(:forbidden)
+    end
+  end
+
+  describe "PATCH /api/v1/activities/:id" do
+    it 'should successfully an activity' do
+      patch api_v1_activity_url(@activity),
+      params: { 
+        activity: { 
+          title: @activity.title,
+          park: 'Kidepo NP',
+          image_url: @activity.image_url,
+          details: @activity.details,
+          user_id: @activity.user_id 
+        }
+      },
+      headers: { Authorization: JsonWebToken.encode(user_id: @activity.user_id) },
+      as: :json
+
+      expect(response).to have_http_status(:success)
+    end
+
+    it 'should forbid updating an activity by unauthorized user' do
+      patch api_v1_activity_url(@activity),
+      params: { 
+        activity: { 
+          title: @activity.title,
+          park: @activity.park,
+          image_url: @activity.image_url,
+          details: @activity.details,
+          user_id: @activity.user_id
+        }
+      },
+      headers: { Authorization: JsonWebToken.encode(user_id: @user_two.id) },
+      as: :json
       expect(response).to have_http_status(:forbidden)
     end
   end
