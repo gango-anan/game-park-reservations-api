@@ -9,7 +9,8 @@ class Api::V1::ActivitiesController < ApplicationController
   end
 
   def show
-    render json: ActivitySerializer.new(@activity).serializable_hash
+    options = { include: [:user] }
+    render json: ActivitySerializer.new(@activity, options).serializable_hash
   end
 
   def create

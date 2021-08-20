@@ -7,7 +7,6 @@ RSpec.describe Activity, type: :model do
     end
 
     it { should validate_presence_of(:title) }
-    it { should validate_uniqueness_of(:title) }
     it { should validate_presence_of(:park) }
     it { should validate_presence_of(:image_url) }
     it { should validate_presence_of(:details) }

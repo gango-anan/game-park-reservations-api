@@ -8,23 +8,25 @@ RSpec.describe "Api::V1::Activities", type: :request do
     @user_two = create(:user)
   end
 
-  describe "GET /api/v1/activities/:id" do
+  describe "GET /activity" do
     it 'should show an activity' do
       get api_v1_activity_url(@activity), as: :json
-      json_response = JSON.parse(self.response.body)
+      json_response = JSON.parse(self.response.body, symbolize_names: true)
       expect(response).to have_http_status(:success)
-      expect(@activity.title).to eql(json_response['data']['attributes']['title'])
+      expect(@activity.title).to eql(json_response.dig(:data, :attributes, :title))
+      expect(@activity.user.id.to_s).to eql(json_response.dig(:data, :relationships, :user, :data, :id))
+      expect(@activity.user.email).to eql(json_response.dig(:included, 0, :attributes, :email))
     end
   end
 
-  describe "GET /api/v1/activities" do
+  describe "GET /activities" do
     it 'should show an activities' do
       get api_v1_activities_url(), as: :json
       expect(response).to have_http_status(:success)
     end
   end
 
-  describe "POST /api/v1/activities" do
+  describe "POST /activities" do
     it 'should successfully create an activity if all params are passed and user is authorized' do
       post api_v1_activities_url,
       params: { 
@@ -74,7 +76,7 @@ RSpec.describe "Api::V1::Activities", type: :request do
     end
   end
 
-  describe "PATCH /api/v1/activities/:id" do
+  describe "PATCH /activity" do
     it 'should successfully an activity' do
       patch api_v1_activity_url(@activity),
       params: { 
@@ -109,7 +111,7 @@ RSpec.describe "Api::V1::Activities", type: :request do
     end
   end
 
-  describe "DELETE /api/v1/activities/:id" do
+  describe "DELETE /activity" do
     it 'should successfully delete activity' do
       delete api_v1_activity_url(@activity), 
         headers: { Authorization: JsonWebToken.encode(user_id: @activity.user_id) },
