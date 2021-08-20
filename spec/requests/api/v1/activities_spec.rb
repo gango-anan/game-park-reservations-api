@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe "Api::V1::Activities", type: :request do
   before(:all) do
     @activity = create(:activity)
+    @activity_two = create(:activity)
+    @activity_three = create(:activity)
     @user_two = create(:user)
   end
 
@@ -101,6 +103,30 @@ RSpec.describe "Api::V1::Activities", type: :request do
           user_id: @activity.user_id
         }
       },
+      headers: { Authorization: JsonWebToken.encode(user_id: @user_two.id) },
+      as: :json
+      expect(response).to have_http_status(:forbidden)
+    end
+  end
+
+  describe "DELETE /api/v1/activities/:id" do
+    it 'should successfully delete activity' do
+      delete api_v1_activity_url(@activity), 
+        headers: { Authorization: JsonWebToken.encode(user_id: @activity.user_id) },
+        as: :json
+      expect(response).to have_http_status(:no_content)
+    end
+
+    it 'should reduce the number of activities by 1' do
+      expect do
+        delete api_v1_activity_url(@activity_two),
+        headers: { Authorization: JsonWebToken.encode(user_id: @activity_two.user_id) },
+        as: :json
+      end.to change(Activity, :count).by(-1)
+    end
+
+    it 'should forbid unauthorized user from deleting an activity' do
+      delete api_v1_activity_url(@activity_three),
       headers: { Authorization: JsonWebToken.encode(user_id: @user_two.id) },
       as: :json
       expect(response).to have_http_status(:forbidden)

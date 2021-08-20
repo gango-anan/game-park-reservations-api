@@ -1,7 +1,7 @@
 class Api::V1::ActivitiesController < ApplicationController
-  before_action :set_activity, only: %i[show update]
+  before_action :set_activity, only: %i[show update destroy]
   before_action :check_login_status, only: %i[create]
-  before_action :check_ownership, only: %i[update]
+  before_action :check_ownership, only: %i[update destroy]
 
   def index
     render json: Activity.all
@@ -26,6 +26,11 @@ class Api::V1::ActivitiesController < ApplicationController
     else
       render json: @activity.errors, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @activity.destroy
+    head 204
   end
 
   private
