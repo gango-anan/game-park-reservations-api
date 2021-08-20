@@ -6,6 +6,5 @@ FactoryBot.define do
     park { Faker::App.name }
     image_url { Faker::App.name }
     details { Faker::App.name }
-    user
   end
 end
