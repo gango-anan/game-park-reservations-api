@@ -1,7 +1,7 @@
 class Api::V1::ReservationsController < ApplicationController
   before_action :set_reservation, only: %i[show update destroy]
   before_action :check_login_status, only: %i[index create]
-  before_action :check_ownership, only: %i[update destroy]
+  before_action :check_ownership, only: %i[show update destroy]
 
   def index
     reservations = current_user.reservations.includes(:activity).all
