@@ -1,7 +1,6 @@
 class Api::V1::ActivitiesController < ApplicationController
   before_action :set_activity, only: %i[show update destroy]
-  before_action :check_login_status, only: %i[create]
-  before_action :check_ownership, only: %i[update destroy]
+  before_action :check_login_status, only: %i[update destroy create]
 
   def index
     @activities = Activity.all
@@ -9,8 +8,7 @@ class Api::V1::ActivitiesController < ApplicationController
   end
 
   def show
-    options = { include: [:user] }
-    render json: ActivitySerializer.new(@activity, options).serializable_hash
+    render json: ActivitySerializer.new(@activity).serializable_hash
   end
 
   def create
@@ -39,10 +37,6 @@ class Api::V1::ActivitiesController < ApplicationController
 
   def activity_params
     params.require(:activity).permit(:title, :park, :image_url, :details, :user_id )
-  end
-
-  def check_ownership
-    head :forbidden unless @activity.user_id == current_user&.id
   end
 
   def set_activity
