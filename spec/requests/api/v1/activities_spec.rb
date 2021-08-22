@@ -72,7 +72,7 @@ RSpec.describe "Api::V1::Activities", type: :request do
   end
 
   describe "PATCH /activity" do
-    it 'should successfully an activity' do
+    it 'should successfully update an activity' do
       patch api_v1_activity_url(@activity),
       params: { 
         activity: { 
