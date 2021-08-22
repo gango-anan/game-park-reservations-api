@@ -5,6 +5,13 @@ class User < ApplicationRecord
   validates_format_of :email, with: /@/
   validates :password, presence: true, length: { minimum: 8 }
 
-  has_many :reservations
+  has_many :reservations, dependent: :destroy
   has_many :activities, through: :reservations
+
+
+  def self.user_activities(user)
+    user_reservs = []
+    user.reservations.each { |reserv| user_reservs << reserv.activity_id }
+    Activity.where(id: user_reservs)
+  end
 end
