@@ -7,8 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.delete_all
-user = User.create!(username: 'admin', email: 'admin@galisoft.com', password: 'P@ssW0rd2021', password_confirmation: 'P@ssW0rd2021')
-puts "Created Admin user: #{user.email}"
+first_user = User.create!(username: 'admin', email: 'admin@galisoft.com', password: 'administrator', password_confirmation: 'administrator', admin: true)
+second_user = User.create!(username: 'user', email: 'user@galisoft.com', password: 'password', password_confirmation: 'password')
+puts "Created Admin user: #{first_user.email}"
+puts "Created Ordinary user: #{second_user.email}"
 Activity.delete_all
 NP = 'National Park'
 activity_one = Activity.create!(
