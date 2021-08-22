@@ -1,5 +1,4 @@
 class ActivitySerializer
   include FastJsonapi::ObjectSerializer
-  attributes :title, :park, :image_url, :details
-  belongs_to :user
+  attributes :id, :title, :park, :image_url, :details
 end
