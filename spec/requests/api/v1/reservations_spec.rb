@@ -93,18 +93,17 @@ RSpec.describe "Api::V1::Reservations", type: :request do
       expect(response).to have_http_status(:success)
     end
 
-    # it 'should forbid updating an reservation by unauthorized user' do
-    #   patch api_v1_activity_url(@reservation),
-    #   params: { 
-    #     reservation: { 
-    #       title: @reservation.title,
-    #       park: @reservation.park,
-    #       image_url: @reservation.image_url,
-    #       details: @reservation.details
-    #     }
-    #   }
-    #   expect(response).to have_http_status(:forbidden)
-    # end
+    it 'should forbid updating a reservation by unauthorized user' do
+      patch api_v1_reservation_url(@reservation),
+      params: { 
+        reservation: { 
+          user_id: @reservation.user_id,
+          activity_id: @another_activity.id,
+          reservation_date: '2024-10-10'
+        }
+      }
+      expect(response).to have_http_status(:forbidden)
+    end
   end
 
   describe "DELETE /reservation" do
