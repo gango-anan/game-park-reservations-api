@@ -17,6 +17,7 @@ class Api::V1::UsersController < ApplicationController
     if @user.save
       render json: {
         user: {
+          id: @user.id,
           admin: @user.admin,
           username: @user.username,
           email: @user.email,
