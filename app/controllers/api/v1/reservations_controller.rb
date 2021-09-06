@@ -17,7 +17,7 @@ class Api::V1::ReservationsController < ApplicationController
     if reservation.save
       render json: ReservationSerializer.new(reservation).serializable_hash, status: :created
     else
-      render json: { errors: reservation.errors }, status: :unprocessable_entity
+      render json: reservation.errors.full_messages, status: :unprocessable_entity
     end
   end
 
