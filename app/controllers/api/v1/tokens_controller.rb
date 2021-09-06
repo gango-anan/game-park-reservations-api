@@ -12,7 +12,7 @@ class Api::V1::TokensController < ApplicationController
         }
       }
     else
-      render json: "Invalid email or password!" , status: :unauthorized
+      render json: 'Invalid email or password!', status: :unauthorized
     end
   end
 

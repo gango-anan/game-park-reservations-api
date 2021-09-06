@@ -8,7 +8,6 @@ class User < ApplicationRecord
   has_many :reservations, dependent: :destroy
   has_many :activities, through: :reservations
 
-
   def self.user_activities(user)
     user_reservs = []
     user.reservations.each { |reserv| user_reservs << reserv.activity_id }

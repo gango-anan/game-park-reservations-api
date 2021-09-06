@@ -37,7 +37,7 @@ class Api::V1::ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params.require(:reservation).permit(:user_id, :activity_id, :reservation_date )
+    params.require(:reservation).permit(:user_id, :activity_id, :reservation_date)
   end
 
   def check_ownership

@@ -36,7 +36,7 @@ class Api::V1::ActivitiesController < ApplicationController
   private
 
   def activity_params
-    params.require(:activity).permit(:title, :park, :image_url, :details, :user_id )
+    params.require(:activity).permit(:title, :park, :image_url, :details, :user_id)
   end
 
   def set_activity
