@@ -5,12 +5,21 @@
 
 # Read more: https://github.com/cyu/rack-cors
 
-# Rails.application.config.middleware.insert_before 0, Rack::Cors do
-#   allow do
-#     origins 'example.com'
-#
-#     resource '*',
-#       headers: :any,
-#       methods: [:get, :post, :put, :patch, :delete, :options, :head]
-#   end
-# end
+Rails.application.config.middleware.insert_before 0, Rack::Cors do
+  allow do
+    origins 'http://localhost:3001'
+
+    resource '*',
+    headers: :any,
+    methods: [:get, :post, :put, :patch, :delete, :options, :head],
+    expose: ['Authorization']
+  end
+  allow do
+    origins 'https://galisoft-gamesafaris.netlify.app'
+
+    resource '*',
+    headers: :any,
+    methods: [:get, :post, :put, :patch, :delete, :options, :head],
+    expose: ['Authorization']
+  end
+end
