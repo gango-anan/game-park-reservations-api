@@ -1,6 +1,6 @@
 # GAME SAFARIS RESERVATIONS API
 
-Game Safaris Reservations is A RESTFUL API built with Ruby on Rails. It makes use of JWT to implement Authentication and Authorization features. This is a full stack application, where users can access a list of Game Safaries activities from which they can choose an activity and make a reservation. The application can be accessed from the front end using the [Game Safaris Reservations](https://galisoft-gamesafaris.netlify.app) front end feature built using React and Redux.
+Game Safaris Reservations is A RESTFUL API built with Ruby on Rails. It makes use of JWT to implement Authentication and Authorization features. This is a full stack application, where users can access a list of Game Safaries activities from which they can choose an activity and make a reservation. The application can be accessed using the front end feature [Game Safaris Reservations](https://galisoft-gamesafaris.netlify.app) built using React and Redux.
 
 ## Home page of a logged in user.
 
