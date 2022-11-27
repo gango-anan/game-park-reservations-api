@@ -85,6 +85,4 @@ test:
 #
 production:
   <<: *default
-  database: game_park_reservations_api_production
-  username: game_park_reservations_api
-  password: <%= ENV['GAME_PARK_RESERVATIONS_API_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
